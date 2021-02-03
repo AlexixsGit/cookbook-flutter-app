@@ -16,6 +16,11 @@ class _LoginPageState extends State<LoginPage> {
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [Colors.cyan[300], Colors.cyan[800]])),
+            child: Image.asset(
+              'assets/images/logo.png',
+              color: Colors.white,
+            ),
+            height: 200,
           )
         ],
       ),
