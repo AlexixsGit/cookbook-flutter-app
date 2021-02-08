@@ -1,5 +1,6 @@
 import 'package:cookbook_app/src/connection/server_controller.dart';
 import 'package:cookbook_app/src/screens/home_page.dart';
+import 'package:cookbook_app/src/screens/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/user.dart';
 
@@ -23,9 +24,11 @@ class MyApp extends StatelessWidget {
             case '/home':
               User userLogged = settings.arguments;
               return HomePage(userLogged);
+            case '/register':
+              return RegisterPage(_serverController, context);
           }
         });
-       },
+      },
     );
   }
 }
