@@ -24,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String _errorMessage = '';
   File imageFile;
   Genrer genrer;
+  bool showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+                    child: ListView(
                       children: [
                         TextFormField(
                           decoration: InputDecoration(labelText: 'User'),
@@ -77,8 +77,19 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 20,
                         ),
                         TextFormField(
-                          decoration: InputDecoration(labelText: 'Password'),
-                          obscureText: true,
+                          decoration: InputDecoration(
+                              labelText: 'Password',
+                              suffixIcon: IconButton(
+                                icon: Icon(showPassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    this.showPassword = !showPassword;
+                                  });
+                                },
+                              )),
+                          obscureText: !this.showPassword,
                           onSaved: (value) {
                             this._password = value;
                           },
@@ -186,7 +197,5 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _register(BuildContext context) {
-    
-  }
+  void _register(BuildContext context) {}
 }
