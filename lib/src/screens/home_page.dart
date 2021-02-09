@@ -16,7 +16,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Cookbook'),
+        title: Text(
+          'My Cookbook',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: FutureBuilder<List<Recipe>>(
         future: widget.serverController.getRecipes(),
@@ -27,8 +30,42 @@ class _HomePageState extends State<HomePage> {
               itemCount: list.length,
               itemBuilder: (context, index) {
                 Recipe recipe = list[index];
-                return Card(
-                  child: Image.file(recipe.photo),
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Card(
+                        child: Container(
+                      height: 250,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: FileImage(recipe.photo), fit: BoxFit.cover),
+                      ),
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        color: Colors.black.withOpacity(0.35),
+                        child: ListTile(
+                          title: Text(
+                            recipe.name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 16),
+                          ),
+                          subtitle: Text(
+                            recipe.user.nickname,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.favorite),
+                            onPressed: () {},
+                            iconSize: 32,
+                          ),
+                        ),
+                      ),
+                    )),
+                  ),
                 );
               },
             );
