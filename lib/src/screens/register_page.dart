@@ -19,16 +19,18 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   bool _loading = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<ScaffoldState> _scaffKey = GlobalKey<ScaffoldState>();
   String _userName = '';
   String _password = '';
   String _errorMessage = '';
   File imageFile;
-  Genrer genrer;
+  Genrer genrer = Genrer.MALE;
   bool showPassword = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: this._scaffKey,
       body: Form(
         key: _formKey,
         child: Stack(
@@ -197,5 +199,51 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _register(BuildContext context) {}
+  void _register(BuildContext context) async {
+    if (this._formKey.currentState.validate()) {
+      this._formKey.currentState.save();
+      if (this.imageFile == null) {
+        showSnackBar(context, 'Select an image', Colors.orange);
+        return;
+      }
+      User user = User(
+          genrer: this.genrer,
+          nickname: this._userName,
+          password: this._password,
+          photo: this.imageFile);
+
+      final state = await widget._serverController.addUser(user);
+
+      if (!state) {
+        showSnackBar(context, 'The user could not create', Colors.orange);
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Information'),
+                content: Text('The user has been updated successfully'),
+                actions: [
+                  FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context, user);
+                      },
+                      child: Text('Ok'))
+                ],
+              );
+            });
+      }
+    }
+  }
+
+  void showSnackBar(BuildContext context, String title, Color backColor) {
+    this._scaffKey.currentState.showSnackBar(SnackBar(
+          content: Text(
+            title,
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: backColor,
+        ));
+  }
 }
