@@ -15,7 +15,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.cyan,
-          accentColor: Colors.white),
+          accentColor: Colors.cyan[300],
+          accentIconTheme: IconThemeData(color: Colors.white)),
+      initialRoute: '/',
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(builder: (BuildContext context) {
           switch (settings.name) {
@@ -26,7 +28,12 @@ class MyApp extends StatelessWidget {
               _serverController.loggedUser = loggedUser;
               return HomePage(_serverController);
             case '/register':
-              return RegisterPage(_serverController, context);
+              User loggedUser = settings.arguments;
+              return RegisterPage(
+                _serverController,
+                context,
+                userToEdit: loggedUser,
+              );
           }
         });
       },

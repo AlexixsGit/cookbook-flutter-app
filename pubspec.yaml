@@ -58,6 +58,8 @@ flutter:
     - assets/images/platillos/salsa-criolla-argentina-foto-principal.jpg
     - assets/images/platillos/sopa-de-tortillas.jpg
     - assets/images/platillos/escabeche-salvadoreno.jpg
+    - assets/images/usuarios/img1.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

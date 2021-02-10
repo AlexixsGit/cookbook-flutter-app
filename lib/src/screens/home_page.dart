@@ -1,3 +1,4 @@
+import 'package:cookbook_app/src/components/my_drawer_widget.dart';
 import 'package:cookbook_app/src/connection/server_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/recipe.dart';
@@ -20,6 +21,9 @@ class _HomePageState extends State<HomePage> {
           'My Cookbook',
           style: TextStyle(color: Colors.white),
         ),
+      ),
+      drawer: MyDrawer(
+        serverController: widget.serverController,
       ),
       body: FutureBuilder<List<Recipe>>(
         future: widget.serverController.getRecipes(),
@@ -58,7 +62,9 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(color: Colors.white),
                           ),
                           trailing: IconButton(
-                            icon: Icon(Icons.favorite),
+                            icon: Icon(
+                              Icons.favorite,
+                            ),
                             onPressed: () {},
                             iconSize: 32,
                           ),
@@ -75,6 +81,10 @@ class _HomePageState extends State<HomePage> {
             );
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
       ),
     );
   }

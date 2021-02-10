@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/user.dart';
 
 class RegisterPage extends StatefulWidget {
-  final ServerController _serverController;
-  final BuildContext _context;
+  ServerController _serverController;
+  BuildContext _context;
+  User userToEdit;
 
-  RegisterPage(this._serverController, this._context, {Key key})
+  RegisterPage(this._serverController, this._context,
+      {Key key, this.userToEdit})
       : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
   File imageFile;
   Genrer genrer = Genrer.MALE;
   bool showPassword = false;
+  bool editingUser = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: ListView(
                       children: [
                         TextFormField(
+                          initialValue: this._userName,
                           decoration: InputDecoration(labelText: 'User'),
                           onSaved: (value) {
                             this._userName = value;
@@ -79,6 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 20,
                         ),
                         TextFormField(
+                          initialValue: this._password,
                           decoration: InputDecoration(
                               labelText: 'Password',
                               suffixIcon: IconButton(
@@ -165,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Register'),
+                              Text((editingUser) ? 'Update' : 'Register'),
                               if (_loading)
                                 Container(
                                   height: 20,
@@ -245,5 +250,17 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           backgroundColor: backColor,
         ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    editingUser = (widget.userToEdit != null);
+    if (editingUser) {
+      this._userName = widget.userToEdit.nickname;
+      this.imageFile = widget.userToEdit.photo;
+      this.genrer = widget.userToEdit.genrer;
+      this._password = widget.userToEdit.password;
+    }
   }
 }
