@@ -21,4 +21,9 @@ class ServerController {
   Future<List<Recipe>> getRecipes() async {
     return await server.getRecipes();
   }
+
+  Future<bool> updateUser(User user) async {
+    loggedUser = user;
+    return await server.updateUser(user);
+  }
 }

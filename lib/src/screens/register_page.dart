@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/user.dart';
 
 class RegisterPage extends StatefulWidget {
-  ServerController _serverController;
-  BuildContext _context;
-  User userToEdit;
+  final ServerController _serverController;
+  final BuildContext _context;
+  final User userToEdit;
 
   RegisterPage(this._serverController, this._context,
       {Key key, this.userToEdit})
@@ -166,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           color: Theme.of(context).primaryColor,
                           textColor: Colors.white,
-                          onPressed: () => _register(context),
+                          onPressed: () => _registerOrUpdate(context),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -204,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _register(BuildContext context) async {
+  void _registerOrUpdate(BuildContext context) async {
     if (this._formKey.currentState.validate()) {
       this._formKey.currentState.save();
       if (this.imageFile == null) {
@@ -217,17 +217,26 @@ class _RegisterPageState extends State<RegisterPage> {
           password: this._password,
           photo: this.imageFile);
 
-      final state = await widget._serverController.addUser(user);
+      var state;
+
+      if (editingUser) {
+        user.id = widget._serverController.loggedUser.id;
+        state = await widget._serverController.updateUser(user);
+      } else {
+        state = await widget._serverController.addUser(user);
+      }
+
+      final action = editingUser ? 'update' : 'create';
 
       if (!state) {
-        showSnackBar(context, 'The user could not create', Colors.orange);
+        showSnackBar(context, 'The user could not $action', Colors.orange);
       } else {
         showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('Information'),
-                content: Text('The user has been updated successfully'),
+                content: Text('The user has been $action successfully'),
                 actions: [
                   FlatButton(
                       onPressed: () {
