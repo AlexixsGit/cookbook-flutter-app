@@ -26,4 +26,8 @@ class ServerController {
     loggedUser = user;
     return await server.updateUser(user);
   }
+
+  Future<List<Recipe>> getFavorities() async {
+    return await server.getFavorites();
+  }
 }

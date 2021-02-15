@@ -27,6 +27,8 @@ class MyDrawer extends StatelessWidget {
             ),
             onDetailsPressed: () {
               Navigator.pop(context);
+              Navigator.of(context).pushNamed('/register',
+                  arguments: serverController.loggedUser);
             },
           ),
           ListTile(
@@ -38,6 +40,7 @@ class MyDrawer extends StatelessWidget {
               Icons.book,
               color: Colors.green,
             ),
+            onTap: () {},
           ),
           ListTile(
             title: Text(
@@ -50,8 +53,7 @@ class MyDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(context).pushNamed('/register',
-                  arguments: serverController.loggedUser);
+              Navigator.of(context).pushNamed('/favorities');
             },
           ),
           ListTile(
