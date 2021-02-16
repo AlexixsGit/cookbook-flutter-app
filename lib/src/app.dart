@@ -1,9 +1,11 @@
 import 'package:cookbook_app/src/connection/server_controller.dart';
+import 'package:cookbook_app/src/screens/detail_page.dart';
 import 'package:cookbook_app/src/screens/home_page.dart';
 import 'package:cookbook_app/src/screens/my_favorite_page.dart';
 import 'package:cookbook_app/src/screens/my_recipe_page.dart';
 import 'package:cookbook_app/src/screens/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modulo1_fake_backend/recipe.dart';
 import 'package:flutter_modulo1_fake_backend/user.dart';
 
 import 'screens/login_page.dart';
@@ -40,6 +42,12 @@ class MyApp extends StatelessWidget {
               return MyFavoritePage(_serverController);
             case '/recipes':
               return MyRecipePage(_serverController);
+            case '/details':
+              Recipe recipe = settings.arguments;
+              return DetailPage(
+                recipe: recipe,
+                serverController: _serverController,
+              );
           }
         });
       },

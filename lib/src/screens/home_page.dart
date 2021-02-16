@@ -36,43 +36,47 @@ class _HomePageState extends State<HomePage> {
                 Recipe recipe = list[index];
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Card(
+                  child: GestureDetector(
+                    onTap: () => _showDetails(context, recipe),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Card(
+                          child: Container(
+                        height: 250,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: FileImage(recipe.photo),
+                              fit: BoxFit.cover),
+                        ),
+                        alignment: Alignment.bottomLeft,
                         child: Container(
-                      height: 250,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: FileImage(recipe.photo), fit: BoxFit.cover),
-                      ),
-                      alignment: Alignment.bottomLeft,
-                      child: Container(
-                        color: Colors.black.withOpacity(0.35),
-                        child: ListTile(
-                          title: Text(
-                            recipe.name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 16),
-                          ),
-                          subtitle: Text(
-                            recipe.user.nickname,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          trailing: IconButton(
-                            icon: Icon(
-                              Icons.favorite,
+                          color: Colors.black.withOpacity(0.35),
+                          child: ListTile(
+                            title: Text(
+                              recipe.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 16),
                             ),
-                            onPressed: () {
-                              _addOrRemoveFavorite(recipe);
-                            },
-                            iconSize: 32,
+                            subtitle: Text(
+                              recipe.user.nickname,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(
+                                Icons.favorite,
+                              ),
+                              onPressed: () {
+                                _addOrRemoveFavorite(recipe);
+                              },
+                              iconSize: 32,
+                            ),
                           ),
                         ),
-                      ),
-                    )),
+                      )),
+                    ),
                   ),
                 );
               },
@@ -93,5 +97,9 @@ class _HomePageState extends State<HomePage> {
 
   void _addOrRemoveFavorite(Recipe recipe) {
     widget.serverController.addOrRemoveFavorite(recipe);
+  }
+
+  _showDetails(BuildContext context, Recipe recipe) {
+    Navigator.pushNamed(context, '/details', arguments: recipe);
   }
 }
