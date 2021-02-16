@@ -40,7 +40,10 @@ class MyDrawer extends StatelessWidget {
               Icons.book,
               color: Colors.green,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/recipes');
+            },
           ),
           ListTile(
             title: Text(

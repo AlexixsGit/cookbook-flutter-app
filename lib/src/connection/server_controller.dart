@@ -41,4 +41,8 @@ class ServerController {
     }
     return nFavorite;
   }
+
+  Future<List<Recipe>> getUserRecipes(User user) {
+    return server.getUserRecipes(user);
+  }
 }
