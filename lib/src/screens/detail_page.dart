@@ -14,6 +14,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  bool favorite;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,5 +84,49 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
     );
+  }
+
+  Widget getFavoriteWidget() {
+    if (favorite != null) {
+      if (favorite) {
+        return IconButton(
+            icon: Icon(Icons.favorite),
+            color: Colors.red,
+            onPressed: () async {
+              widget.serverController.deleteFavorite(widget.recipe);
+              setState(() {
+                favorite = false;
+              });
+            });
+      } else {
+        return IconButton(
+            icon: Icon(Icons.favorite_border),
+            onPressed: () async {
+              widget.serverController.addFavorite(widget.recipe);
+              setState(() {
+                favorite = true;
+              });
+            });
+      }
+    } else {
+      return Container(
+        margin: EdgeInsets.all(15),
+        width: 30,
+        child: CircularProgressIndicator(),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadState();
+  }
+
+  void loadState() async {
+    final state = await widget.serverController.isFavorite(widget.recipe);
+    setState(() {
+      this.favorite = state;
+    });
   }
 }
