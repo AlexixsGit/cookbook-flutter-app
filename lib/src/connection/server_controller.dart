@@ -30,4 +30,15 @@ class ServerController {
   Future<List<Recipe>> getFavorities() async {
     return await server.getFavorites();
   }
+
+  Future<Recipe> addOrRemoveFavorite(Recipe nFavorite) async {
+    bool isFavorite = await server.isFavorite(nFavorite);
+
+    if (isFavorite) {
+      await server.deleteFavorite(nFavorite);
+    } else {
+      await server.addFavorite(nFavorite);
+    }
+    return nFavorite;
+  }
 }

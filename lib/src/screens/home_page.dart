@@ -65,7 +65,9 @@ class _HomePageState extends State<HomePage> {
                             icon: Icon(
                               Icons.favorite,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              _addOrRemoveFavorite(recipe);
+                            },
                             iconSize: 32,
                           ),
                         ),
@@ -87,5 +89,9 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {},
       ),
     );
+  }
+
+  void _addOrRemoveFavorite(Recipe recipe) {
+    widget.serverController.addOrRemoveFavorite(recipe);
   }
 }
