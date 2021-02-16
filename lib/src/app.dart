@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: Colors.cyan,
           accentColor: Colors.cyan[300],
+          iconTheme: IconThemeData(color: Colors.white),
           accentIconTheme: IconThemeData(color: Colors.white)),
       initialRoute: '/',
       onGenerateRoute: (RouteSettings settings) {

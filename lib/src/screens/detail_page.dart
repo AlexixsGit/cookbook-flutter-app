@@ -1,3 +1,4 @@
+import 'package:cookbook_app/src/components/tab_ingredients_widget.dart';
 import 'package:cookbook_app/src/connection/server_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modulo1_fake_backend/recipe.dart';
@@ -53,11 +54,30 @@ class _DetailPageState extends State<DetailPage> {
                     )
                   ],
                 ),
+                actions: [
+                  IconButton(
+                      icon: Icon(Icons.edit),
+                      color: Colors.white,
+                      onPressed: () {}),
+                  IconButton(
+                      icon: Icon(Icons.favorite),
+                      color: Colors.white,
+                      onPressed: () {}),
+                  IconButton(
+                      icon: Icon(Icons.help_outline),
+                      color: Colors.white,
+                      onPressed: () {})
+                ],
               )
             ];
           },
           body: TabBarView(
-            children: [Text('Hello'), Text('Details screen')],
+            children: [
+              TabIngredientsWidget(recipe: widget.recipe),
+              Container(
+                color: Colors.orange,
+              )
+            ],
           ),
         ),
       ),
